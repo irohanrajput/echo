@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "just a little community, but vibrant it is.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irohanrajput/echo.git"
+  },
+  "keywords": [
+    "express.js",
+    "node.js",
+    "react.js",
+    "jwt",
+    "postgresql",
+    "google-auth"
+  ],
+  "author": "tushar singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irohanrajput/echo/issues"
+  },
+  "homepage": "https://github.com/irohanrajput/echo#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.14.0"
+  }
+}
