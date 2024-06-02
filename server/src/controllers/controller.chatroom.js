@@ -1,8 +1,8 @@
 // src/controllers/chatController.js
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-const createChatRoom = async (req, res) => {
+export const createChatRoom = async (req, res) => {
   const { name } = req.body;
   try {
     const chatRoom = await prisma.chatRoom.create({ data: { name } });
@@ -12,7 +12,7 @@ const createChatRoom = async (req, res) => {
   }
 };
 
-const getChatRooms = async (req, res) => {
+export const getChatRoom = async (req, res) => {
   try {
     const chatRooms = await prisma.chatRoom.findMany();
     res.json(chatRooms);
@@ -21,4 +21,3 @@ const getChatRooms = async (req, res) => {
   }
 };
 
-module.exports = { createChatRoom, getChatRooms };

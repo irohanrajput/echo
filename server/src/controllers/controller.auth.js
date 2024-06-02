@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   const { email, password } = req.body;
   const hashdPassword = await bycrypt.hash(password, 10);
   try {
@@ -20,7 +20,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await prisma.user.findUnique({ where: { email } });
@@ -47,4 +47,3 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
