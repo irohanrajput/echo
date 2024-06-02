@@ -1,22 +1,31 @@
-import bycrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const register = async (req, res) => {
-  const { email, password } = req.body;
-  const hashdPassword = await bycrypt.hash(password, 10);
+  console.log(req.body);
+  const { username, email, name, password } = req.body;
+  if (!email || !name || !password) {
+    return res
+      .status(400)
+      .json({ message: "All fields are required", success: false });
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
     const user = await prisma.user.create({
       data: {
+        name,
+        username,
         email,
-        password: hashdPassword,
+        password: hashedPassword,
       },
     });
     res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "user registrsion failed" });
+    res.status(400).json({ message: "User registration failed" });
   }
 };
 
@@ -27,8 +36,9 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (user && (await bycrypt.compare(password, user, password))) {
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    console.log(user);
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
         expiresIn: "150h",
       });
       return res
@@ -38,12 +48,9 @@ export const login = async (req, res) => {
     res.status(401).json({ message: "Invalid credentials" });
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .json({
-        message:
-          "Login failed due to unknown error, just hold on, we're fixing it.",
-      });
+    res.status(400).json({
+      message:
+        "Login failed due to unknown error, just hold on, we're fixing it.",
+    });
   }
 };
-

@@ -1,8 +1,14 @@
 import express from 'express';
 import {createChatRoom, getChatRoom} from '../controllers/controller.chatroom.js';
+import authenticateToken from '../middlewares/middleware.auth.js';
+
+
 const router = express.Router();
 
-router.post('/chatrooms', createChatRoom);
-router.get('/chatrooms', getChatRoom);
+// router.post('/', authenticateToken, createChatRoom);
+// router.get('/', authenticateToken, getChatRoom);
+
+router.post('/', createChatRoom);
+router.get('/', getChatRoom);
 
 export default router;

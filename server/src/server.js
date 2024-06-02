@@ -3,8 +3,9 @@ import http from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 import logger from "./middlewares/middlewares.logger.js";
-import authRoutes from "./routes/route.auth.js";
-import chatroomRoutes from "./routes/route.chatroom.js";
+import userRoutes from "./routes/route.user.js";
+import chatRoomRoutes from "./routes/route.chatroom.js";
+import authenticateToken from "./middlewares/middleware.auth.js";
 
 dotenv.config();
 
@@ -14,10 +15,8 @@ const io = new Server(server);
 
 app.use(express.json());
 app.use(logger);
-app.use("/api/users/", authRoutes);
-app.use("/api/chatrooms/", chatroomRoutes);
-
-app.use(express.json());
+app.use("/api/users/", userRoutes);
+app.use("/api/chatrooms/", chatRoomRoutes);
 
 const PORT = process.env.PORT || 5000;
 
