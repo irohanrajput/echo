@@ -9,6 +9,6 @@ const router = express.Router();
 // router.get('/', authenticateToken, getChatRoom);
 
 router.post('/', createChatRoom);
-router.get('/', getChatRoom);
+router.get('/', getChatRoom);k
 
 export default router;
